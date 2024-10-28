@@ -1,0 +1,8 @@
+{
+  "tasks": {
+    "compile": "deno compile --allow-net --output server main.ts"
+  },
+  "imports": {
+    "@oak/oak": "jsr:@oak/oak@^17.1.2"
+  }
+}
