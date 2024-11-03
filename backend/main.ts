@@ -1,7 +1,7 @@
 import { Application } from "@oak/oak/application";
 import { Router } from "@oak/oak/router";
 
-const PORT = 8080;
+const PORT = 8001;
 const PREFIX = "/api/v1";
 
 const router = new Router({

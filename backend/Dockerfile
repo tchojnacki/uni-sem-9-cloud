@@ -11,7 +11,7 @@ RUN deno task compile
 
 FROM ubuntu:24.10 AS run
 
-EXPOSE 8080
+EXPOSE 8001
 WORKDIR /app
 USER ubuntu
 

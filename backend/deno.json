@@ -1,5 +1,6 @@
 {
   "tasks": {
+    "dev": "deno run --allow-net main.ts",
     "compile": "deno compile --allow-net --output server main.ts"
   },
   "imports": {
