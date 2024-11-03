@@ -17,6 +17,6 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 
 if (import.meta.main) {
-  console.log(`Backend is running on port ${PORT}!`);
+  console.log(`Backend running on http://0.0.0.0:${PORT}`);
   app.listen({ port: PORT });
 }

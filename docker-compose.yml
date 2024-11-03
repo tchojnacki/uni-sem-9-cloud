@@ -1,9 +1,12 @@
 services:
   backend:
     build: ./backend
-    ports:
-      - "8001:8001"
+    ports: ["8001:8001"]
   frontend:
     build: ./frontend
-    ports:
-      - "8002:8002"
+    ports: ["8002:8002"]
+  cognito:
+    image: jagregory/cognito-local:3-latest
+    ports: ["8003:8003"]
+    environment: ["PORT=8003"]
+    volumes: ["./cognito/.cognito:/app/.cognito"]

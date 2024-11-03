@@ -2,5 +2,5 @@
 
 PORT="8002"
 
-echo "Frontend is running on port $PORT!"
+echo "Frontend running on http://0.0.0.0:$PORT"
 busybox httpd -f -p "$PORT" -h ./dist
