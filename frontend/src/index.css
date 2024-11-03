@@ -1,0 +1,82 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  text-decoration: inherit;
+}
+
+:root {
+  font-size: 16px;
+  font-family: sans-serif;
+
+  --bar-height: 3rem;
+  --users-width: 20rem;
+}
+
+.container {
+  display: grid;
+  height: 100vh;
+
+  grid-template-columns: 1fr;
+  grid-template-rows: var(--bar-height) auto 1fr;
+  grid-template-areas: "bar" "users" "chat";
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    grid-template-columns: var(--users-width) 1fr;
+    grid-template-rows: var(--bar-height) 1fr;
+    grid-template-areas: "bar bar" "users chat";
+  }
+}
+
+.bar {
+  grid-area: bar;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #222;
+  color: #eee;
+}
+
+.bar h1 {
+  padding: 0.25rem 1rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.bar nav {
+  height: 100%;
+  display: flex;
+}
+
+.bar nav a {
+  padding: 0.25rem 0.5rem;
+  display: grid;
+  place-items: center;
+}
+
+.bar nav a:hover {
+  background-color: #333;
+}
+
+.users {
+  grid-area: users;
+  padding: 1rem;
+  background-color: #ddd;
+}
+
+.chat {
+  grid-area: chat;
+  padding: 1rem;
+}
+
+.users h2,
+.chat h2 {
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
