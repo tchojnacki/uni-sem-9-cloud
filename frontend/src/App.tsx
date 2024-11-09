@@ -1,25 +1,15 @@
-import { useState } from "react";
-import { Users } from "./Users";
-import { Chat } from "./Chat";
-import { useAuth } from "./AuthContext";
-import { LoginPage } from "./LoginPage";
-import { TopBar } from "./TopBar";
+import { useAuth } from "./auth/AuthContext";
+import { LoginPage } from "./auth/LoginPage";
+import { TopBar } from "./common/TopBar";
+import { Messaging } from "./chat/Messaging";
 
 export function App() {
   const { identity } = useAuth();
-  const [selectedUid, setSelectedUid] = useState<string | null>(null);
 
   return (
     <div className="container">
       <TopBar />
-      {identity ? (
-        <div className="layout">
-          <Users />
-          <Chat />
-        </div>
-      ) : (
-        <LoginPage />
-      )}
+      {identity ? <Messaging /> : <LoginPage />}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useAuth } from "./AuthContext";
+import { useAuth } from "../auth/AuthContext";
 
 export function TopBar() {
   const { identity, logOut } = useAuth();

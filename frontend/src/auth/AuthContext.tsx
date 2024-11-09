@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import * as cognito from "./cognito";
-import { err, ok, Result } from "./Result";
+import { err, ok, Result } from "../common/Result";
 
 type Identity = { accessToken: string; refreshToken: string } | null;
 type AuthData = {
