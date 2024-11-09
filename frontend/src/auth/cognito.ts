@@ -6,8 +6,8 @@ import {
 import { err, ok, Result, resultFromAsync } from "../common/Result";
 
 const REGION = "us-east-1";
-const ENDPOINT = "http://localhost:8003";
-const CLIENT_ID = "8mw43nwedhv432ghl590umq20";
+const ENDPOINT = import.meta.env.VITE_COGNITO_IP;
+const CLIENT_ID = import.meta.env.VITE_COGNITO_CLIENT_ID;
 
 const cognitoClient = new CognitoIdentityProviderClient({
   region: REGION,

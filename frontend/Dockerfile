@@ -18,6 +18,6 @@ EXPOSE 8002
 WORKDIR /app
 USER ubuntu
 
-COPY ./serve.sh .
+COPY ./prod.sh .
 COPY --from=build ./app/dist ./dist
-ENTRYPOINT ["./serve.sh"]
+ENTRYPOINT ["./prod.sh"]
