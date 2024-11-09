@@ -9,4 +9,3 @@ services:
     image: jagregory/cognito-local:3-latest
     ports: ["8003:8003"]
     environment: ["PORT=8003"]
-    volumes: ["./cognito/.cognito:/app/.cognito"]

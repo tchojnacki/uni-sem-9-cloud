@@ -1,19 +1,25 @@
 import { useState } from "react";
-import { AuthPanel } from "./AuthPanel";
 import { Users } from "./Users";
 import { Chat } from "./Chat";
+import { useAuth } from "./AuthContext";
+import { LoginPage } from "./LoginPage";
+import { TopBar } from "./TopBar";
 
 export function App() {
+  const { identity } = useAuth();
   const [selectedUid, setSelectedUid] = useState<string | null>(null);
 
   return (
     <div className="container">
-      <header className="bar">
-        <h1>Cloud P1</h1>
-        <AuthPanel />
-      </header>
-      <Users />
-      <Chat />
+      <TopBar />
+      {identity ? (
+        <div className="layout">
+          <Users />
+          <Chat />
+        </div>
+      ) : (
+        <LoginPage />
+      )}
     </div>
   );
 }
