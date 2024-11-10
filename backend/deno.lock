@@ -1,27 +1,54 @@
 {
   "version": "4",
   "specifiers": {
+    "jsr:@bartlomieju/postgres@~0.17.2": "0.17.2",
     "jsr:@oak/commons@1": "1.0.0",
     "jsr:@oak/oak@^17.1.2": "17.1.2",
     "jsr:@std/assert@1": "1.0.6",
+    "jsr:@std/assert@~0.213.1": "0.213.1",
+    "jsr:@std/async@0.213.1": "0.213.1",
+    "jsr:@std/bytes@0.213.1": "0.213.1",
     "jsr:@std/bytes@1": "1.0.2",
     "jsr:@std/bytes@^1.0.2": "1.0.2",
+    "jsr:@std/bytes@~0.213.1": "0.213.1",
+    "jsr:@std/crypto@0.213.1": "0.213.1",
     "jsr:@std/crypto@1": "1.0.3",
+    "jsr:@std/datetime@0.213.1": "0.213.1",
+    "jsr:@std/encoding@0.213.1": "0.213.1",
+    "jsr:@std/encoding@0.224.0": "0.224.0",
     "jsr:@std/encoding@1": "1.0.5",
     "jsr:@std/encoding@^1.0.5": "1.0.5",
+    "jsr:@std/fmt@0.213.1": "0.213.1",
     "jsr:@std/http@1": "1.0.9",
+    "jsr:@std/io@0.213.1": "0.213.1",
     "jsr:@std/io@0.224": "0.224.9",
     "jsr:@std/media-types@1": "1.0.3",
+    "jsr:@std/path@0.213.1": "0.213.1",
     "jsr:@std/path@1": "1.0.7",
+    "jsr:@zaubrik/djwt@^3.0.2": "3.0.2",
+    "npm:aws-jwt-verify@^4.0.1": "4.0.1",
     "npm:path-to-regexp@6.2.1": "6.2.1"
   },
   "jsr": {
+    "@bartlomieju/postgres@0.17.2": {
+      "integrity": "e31842f98fbc37e5be2fc6248baf482307e8edce53cee07fb27a7d644cdacfe2",
+      "dependencies": [
+        "jsr:@std/async",
+        "jsr:@std/bytes@0.213.1",
+        "jsr:@std/crypto@0.213.1",
+        "jsr:@std/datetime",
+        "jsr:@std/encoding@0.213.1",
+        "jsr:@std/fmt",
+        "jsr:@std/io@0.213.1",
+        "jsr:@std/path@0.213.1"
+      ]
+    },
     "@oak/commons@1.0.0": {
       "integrity": "49805b55603c3627a9d6235c0655aa2b6222d3036b3a13ff0380c16368f607ac",
       "dependencies": [
-        "jsr:@std/assert",
+        "jsr:@std/assert@1",
         "jsr:@std/bytes@1",
-        "jsr:@std/crypto",
+        "jsr:@std/crypto@1",
         "jsr:@std/encoding@1",
         "jsr:@std/http",
         "jsr:@std/media-types"
@@ -31,32 +58,63 @@
       "integrity": "3465ddd605c7e1c50289c07e98980e8d49a790d53c6fd01d7eb93a7d301f0a9a",
       "dependencies": [
         "jsr:@oak/commons",
-        "jsr:@std/assert",
+        "jsr:@std/assert@1",
         "jsr:@std/bytes@1",
-        "jsr:@std/crypto",
+        "jsr:@std/crypto@1",
         "jsr:@std/http",
-        "jsr:@std/io",
+        "jsr:@std/io@0.224",
         "jsr:@std/media-types",
-        "jsr:@std/path",
+        "jsr:@std/path@1",
         "npm:path-to-regexp"
       ]
+    },
+    "@std/assert@0.213.1": {
+      "integrity": "24c28178b30c8e0782c18e8e94ea72b16282207569cdd10ffb9d1d26f2edebfe"
     },
     "@std/assert@1.0.6": {
       "integrity": "1904c05806a25d94fe791d6d883b685c9e2dcd60e4f9fc30f4fc5cf010c72207"
     },
+    "@std/async@0.213.1": {
+      "integrity": "c7e230912fca7e25ed4befbdc1a494acc855d527c178269b8c9de40649c4dc86"
+    },
+    "@std/bytes@0.213.1": {
+      "integrity": "97f133c5bfb18b4522675e0822089de91e32618a4d8c2fcea8e175aca8f1f65c"
+    },
     "@std/bytes@1.0.2": {
       "integrity": "fbdee322bbd8c599a6af186a1603b3355e59a5fb1baa139f8f4c3c9a1b3e3d57"
+    },
+    "@std/crypto@0.213.1": {
+      "integrity": "e02fe3baba719add8cd5188963ce0c215583e4a58102d026684b57634415cd46"
     },
     "@std/crypto@1.0.3": {
       "integrity": "a2a32f51ddef632d299e3879cd027c630dcd4d1d9a5285d6e6788072f4e51e7f"
     },
+    "@std/datetime@0.213.1": {
+      "integrity": "cf64facd328b3f285406031e116bb43fe63a47dc8ab37f2f8c730331de957240"
+    },
+    "@std/encoding@0.213.1": {
+      "integrity": "fcbb6928713dde941a18ca5db88ca1544d0755ec8fb20fe61e2dc8144b390c62"
+    },
+    "@std/encoding@0.224.0": {
+      "integrity": "efb6dca97d3e9c31392bd5c8cfd9f9fc9decf5a1f4d1f78af7900a493bcf89b5"
+    },
     "@std/encoding@1.0.5": {
       "integrity": "ecf363d4fc25bd85bd915ff6733a7e79b67e0e7806334af15f4645c569fefc04"
+    },
+    "@std/fmt@0.213.1": {
+      "integrity": "a06d31777566d874b9c856c10244ac3e6b660bdec4c82506cd46be052a1082c3"
     },
     "@std/http@1.0.9": {
       "integrity": "d409fc319a5e8d4a154e576c758752e9700282d74f31357a12fec6420f9ecb6c",
       "dependencies": [
         "jsr:@std/encoding@^1.0.5"
+      ]
+    },
+    "@std/io@0.213.1": {
+      "integrity": "18ee1ab872d43077d9ced51ffae38093ad4e818d2b23c3b18a6683edf5f428ae",
+      "dependencies": [
+        "jsr:@std/assert@~0.213.1",
+        "jsr:@std/bytes@~0.213.1"
       ]
     },
     "@std/io@0.224.9": {
@@ -68,18 +126,36 @@
     "@std/media-types@1.0.3": {
       "integrity": "b12d30a7852f7578f4d210622df713bbfd1cbdd9b4ec2eaf5c1845ab70bab159"
     },
+    "@std/path@0.213.1": {
+      "integrity": "f187bf278a172752e02fcbacf6bd78a335ed320d080a7ed3a5a59c3e88abc673",
+      "dependencies": [
+        "jsr:@std/assert@~0.213.1"
+      ]
+    },
     "@std/path@1.0.7": {
       "integrity": "76a689e07f0e15dcc6002ec39d0866797e7156629212b28f27179b8a5c3b33a1"
+    },
+    "@zaubrik/djwt@3.0.2": {
+      "integrity": "8070adaa49cd9e5d2b8ae82fd461132c966ef2f8ff8378db4a4da8df4f17c664",
+      "dependencies": [
+        "jsr:@std/encoding@0.224.0"
+      ]
     }
   },
   "npm": {
+    "aws-jwt-verify@4.0.1": {
+      "integrity": "sha512-kzvi71eD3w/mCpYRUY7cz6DX4bfYihGdI2yV3FYQ2JuZZenqAqDPz0gWj0ew6vlAtdEVBNb7p+Dm2TAIxpVYMA=="
+    },
     "path-to-regexp@6.2.1": {
       "integrity": "sha512-JLyh7xT1kizaEvcaXOQwOc2/Yhw6KZOvPf1S8401UyLk86CU79LN3vl7ztXGm/pZ+YjoyAJ4rxmHwbkBXJX+yw=="
     }
   },
   "workspace": {
     "dependencies": [
-      "jsr:@oak/oak@^17.1.2"
+      "jsr:@bartlomieju/postgres@~0.17.2",
+      "jsr:@oak/oak@^17.1.2",
+      "jsr:@zaubrik/djwt@^3.0.2",
+      "npm:aws-jwt-verify@^4.0.1"
     ]
   }
 }

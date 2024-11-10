@@ -1,9 +1,12 @@
 {
   "tasks": {
-    "dev": "deno run --allow-net main.ts",
-    "compile": "deno compile --allow-net --output server main.ts"
+    "dev": "deno run --allow-net --allow-env src/main.ts",
+    "compile": "deno compile --allow-net --allow-env --output server src/main.ts"
   },
   "imports": {
-    "@oak/oak": "jsr:@oak/oak@^17.1.2"
+    "@bartlomieju/postgres": "jsr:@bartlomieju/postgres@^0.17.2",
+    "@oak/oak": "jsr:@oak/oak@^17.1.2",
+    "@zaubrik/djwt": "jsr:@zaubrik/djwt@^3.0.2",
+    "aws-jwt-verify": "npm:aws-jwt-verify@^4.0.1"
   }
 }

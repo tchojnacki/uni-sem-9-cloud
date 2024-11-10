@@ -1,7 +1,7 @@
 #!/bin/env bash
 PORT="8003"
 
-CONTAINER=$(docker run -d -p "$PORT:$PORT" -e PORT="$PORT" jagregory/cognito-local:3-latest)
+CONTAINER=$(docker run -d -p "$PORT:9229" jagregory/cognito-local:3-latest)
 ENDPOINT="http://localhost:$PORT"
 USER_POOL_ID=$(aws --endpoint "$ENDPOINT" cognito-idp create-user-pool --pool-name CloudUserPool | jq -r .UserPool.Id)
 CLIENT_ID=$(aws --endpoint "$ENDPOINT" cognito-idp create-user-pool-client --user-pool-id "$USER_POOL_ID" --client-name CloudUserPoolClient | jq -r .UserPoolClient.ClientId)

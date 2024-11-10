@@ -2,12 +2,17 @@ services:
   backend:
     build: "./backend"
     ports: ["8001:8001"]
-    depends_on: ["cognito"]
+    environment:
+      ["DATABASE_URL=postgresql://postgres:1234@database:5432/postgres"]
+    depends_on: ["cognito", "database"]
   frontend:
     build: "./frontend"
     ports: ["8002:8002"]
     depends_on: ["backend", "cognito"]
   cognito:
     image: "jagregory/cognito-local:3-latest"
-    ports: ["8003:8003"]
-    environment: ["PORT=8003"]
+    ports: ["8003:9229"]
+  database:
+    image: "postgres:17.0"
+    ports: ["8004:5432"]
+    environment: ["POSTGRES_PASSWORD=1234"]
