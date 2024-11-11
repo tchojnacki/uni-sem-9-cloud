@@ -13,8 +13,6 @@ services:
       timeout: 5s
       retries: 10
     depends_on:
-      cognito:
-        condition: "service_started"
       database:
         condition: "service_healthy"
   frontend:
@@ -23,21 +21,18 @@ services:
       dockerfile: "Dockerfile.dev"
     ports:
       - "8002:8002"
+    environment:
+      VITE_BACKEND_IP: "http://localhost:8001"
+      VITE_COGNITO_CLIENT_ID: "$COGNITO_CLIENT_ID"
     depends_on:
-      cognito:
-        condition: "service_started"
       backend:
         condition: "service_healthy"
-  cognito:
-    image: "jagregory/cognito-local:3-latest"
-    ports:
-      - "8003:9229"
   database:
     image: "postgres:17.0-alpine"
-    ports:
-      - "8004:5432"
     environment:
       POSTGRES_PASSWORD: "pass"
+    volumes:
+      - ".postgres:/var/lib/postgresql/data"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
       interval: 1s

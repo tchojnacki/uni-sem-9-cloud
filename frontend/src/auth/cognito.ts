@@ -6,12 +6,10 @@ import {
 import { err, ok, Result, resultFromAsync } from "../common/Result";
 
 const REGION = "us-east-1";
-const ENDPOINT = import.meta.env.VITE_COGNITO_IP;
 const CLIENT_ID = import.meta.env.VITE_COGNITO_CLIENT_ID;
 
 const cognitoClient = new CognitoIdentityProviderClient({
   region: REGION,
-  endpoint: ENDPOINT,
 });
 
 type LogInResult = Result<
