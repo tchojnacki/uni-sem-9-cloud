@@ -1,0 +1,52 @@
+.chat {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat h2 {
+  padding: 1rem;
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.send {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border-top: 1px solid #ccc;
+}
+
+.send input {
+  flex: 1;
+  border: 1px solid #444;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.send button {
+  background-color: #3b82f6;
+  color: #eee;
+  padding: 0.25rem 2rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  text-align: center;
+  transition-duration: 0.25s;
+}
+
+.send button:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+.send button:not(:disabled):hover {
+  background-color: #60a5fa;
+}

@@ -1,5 +1,6 @@
 import { FormEvent, useCallback, useState } from "react";
 import { useAuth } from "./AuthContext";
+import styles from "./LoginPage.module.css";
 
 export function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -50,7 +51,7 @@ export function LoginPage() {
   );
 
   return (
-    <div className="auth">
+    <div className={styles.auth}>
       <h2>{isLogin ? "Log in" : "Sign up"}</h2>
       <form onSubmit={isLogin ? handleLogIn : handleSignUp}>
         {isLogin ? null : (
@@ -89,7 +90,7 @@ export function LoginPage() {
           {isLogin ? "Log in" : "Sign up"}
         </button>
       </form>
-      <p>
+      <p className={styles.context}>
         {isLogin ? "No account?" : "Already have an account?"}{" "}
         <a
           href="#"
@@ -105,7 +106,7 @@ export function LoginPage() {
         </a>{" "}
         instead...
       </p>
-      {alert.length > 0 ? <div className="alert">{alert}</div> : null}
+      {alert.length > 0 ? <div className={styles.alert}>{alert}</div> : null}
     </div>
   );
 }

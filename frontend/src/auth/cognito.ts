@@ -3,7 +3,7 @@ import {
   InitiateAuthCommand,
   SignUpCommand,
 } from "@aws-sdk/client-cognito-identity-provider";
-import { err, ok, Result, resultFromAsync } from "../common/Result";
+import { err, ok, Result, resultFromAsync } from "../common/result";
 import { cognitoClientId } from "../common/env";
 
 const REGION = "us-east-1";

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useApi } from "../common/api";
+import styles from "./Users.module.css";
 
 type Account = { id: string; username: string };
 
@@ -20,21 +21,21 @@ export function Users({ selectedId, setSelectedId }: UsersProps) {
 
   if (!me || !accounts) {
     return (
-      <aside className="users">
+      <aside className={styles.users}>
         <h2>Loading...</h2>
       </aside>
     );
   }
 
   return (
-    <aside className="users">
+    <aside className={styles.users}>
       <h2>Users</h2>
       <ul>
         {accounts.map((a) => (
           <li key={a.id}>
             <button
               onClick={() => setSelectedId(a.id)}
-              className={a.id === selectedId ? "active" : ""}
+              className={a.id === selectedId ? styles.active : ""}
               disabled={a.id === me.id || a.id === selectedId}
             >
               {a.username}

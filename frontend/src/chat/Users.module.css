@@ -1,0 +1,42 @@
+.users h2 {
+  padding: 1rem;
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+}
+
+.users {
+  background-color: #ddd;
+}
+
+.users ul {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.users button {
+  padding: 0.5rem 1rem;
+  width: 100%;
+  transition-duration: 0.25s;
+}
+
+.users button {
+  border-bottom: 1px solid #ccc;
+}
+
+.users button:not([disabled]) {
+  cursor: pointer;
+}
+
+.users button:not([disabled]):hover {
+  background-color: #eee;
+}
+
+.users button:not(.active):disabled {
+  opacity: 0.5;
+}
+
+.users button.active {
+  background-color: #fff;
+  border-right: 0.5rem solid #3b82f6;
+}

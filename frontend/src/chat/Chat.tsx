@@ -1,5 +1,6 @@
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { useApi } from "../common/api";
+import styles from "./Chat.module.css";
 
 type Account = {
   id: string;
@@ -49,20 +50,20 @@ export function Chat({ selectedId }: ChatProps) {
   );
 
   if (me === null || selectedId === null) {
-    return <main className="chat"></main>;
+    return <main className={styles.chat}></main>;
   }
 
   return (
-    <main className="chat">
+    <main className={styles.chat}>
       <h2>Chat</h2>
-      <section className="messages">
+      <section className={styles.messages}>
         {messages.map((m) => (
           <div key={m.id}>
             {m.content} {m.time} {String(m.sender === me.id)}
           </div>
         ))}
       </section>
-      <form onSubmit={handleSend}>
+      <form className={styles.send} onSubmit={handleSend}>
         <input
           type="text"
           placeholder="Message..."
