@@ -12,7 +12,7 @@ DATABASE_CONTAINER=$(./dev.sh)
 cd ..
 
 cd backend
-DATABASE_URL="postgresql://postgres:1234@localhost:8004/postgres" deno task dev &
+DATABASE_URL="postgresql://postgres:pass@localhost:8004/postgres" deno task dev &
 PID_BACKEND="$!"
 cd ..
 

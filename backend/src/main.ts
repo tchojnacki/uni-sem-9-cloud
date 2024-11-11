@@ -7,10 +7,10 @@ import { Database } from "./database.ts";
 
 const PORT = 8001;
 const PREFIX = "/api/v1";
-const DATABASE_URL = Deno.env.get("DATABASE_URL") ?? "";
 
 if (import.meta.main) {
-  const database = await Database.setup(DATABASE_URL);
+  const databaseUrl = Deno.env.get("DATABASE_URL") ?? "";
+  const database = await Database.setup(databaseUrl);
 
   const app = new Application();
   app.use(insertCors(), extractAuth(database));
@@ -18,6 +18,8 @@ if (import.meta.main) {
   const router = new Router({
     prefix: PREFIX,
   });
+
+  router.get("/health", (ctx) => (ctx.response.body = { status: "OK" }));
 
   router.get("/accounts", async (ctx) => {
     ctx.response.body = await database.getAccounts();
