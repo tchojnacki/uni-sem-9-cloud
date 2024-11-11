@@ -23,5 +23,18 @@ export function useApi() {
     [headers]
   );
 
-  return { get };
+  const post = useCallback(
+    (url: string, body: object) =>
+      fetch(`${API_BASEPATH}${url}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...headers,
+        },
+        body: JSON.stringify(body),
+      }).then((res) => res.json()),
+    [headers]
+  );
+
+  return { get, post };
 }

@@ -19,7 +19,10 @@ type DefineArgs = {
 function cors(): Middleware {
   return (ctx, next) => {
     ctx.response.headers.set("Access-Control-Allow-Origin", "*");
-    ctx.response.headers.set("Access-Control-Allow-Headers", "Authorization");
+    ctx.response.headers.set(
+      "Access-Control-Allow-Headers",
+      ["Authorization", "Content-Type"].join(", ")
+    );
     return next();
   };
 }
@@ -30,7 +33,7 @@ function logging(): Middleware {
     const method = ctx.request.method;
     const url = ctx.request.url.pathname;
     const sub = ctx.state.sub;
-    console.log(`${time} [${method}] ${url} { sub: ${sub}}`);
+    console.log(`${time} [${method}] ${url} { sub: ${sub} }`);
     return next();
   };
 }

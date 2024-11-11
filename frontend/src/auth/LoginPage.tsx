@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { FormEvent, useCallback, useState } from "react";
 import { useAuth } from "./AuthContext";
 
 export function LoginPage() {
@@ -18,7 +18,7 @@ export function LoginPage() {
   const { logIn, signUp } = useAuth();
 
   const handleLogIn = useCallback(
-    async (e: React.FormEvent) => {
+    async (e: FormEvent) => {
       e.preventDefault();
       setAlert("");
       const result = await logIn(username, password);
@@ -30,7 +30,7 @@ export function LoginPage() {
   );
 
   const handleSignUp = useCallback(
-    async (e: React.FormEvent) => {
+    async (e: FormEvent) => {
       e.preventDefault();
       setAlert("");
       if (password !== confirm) {
