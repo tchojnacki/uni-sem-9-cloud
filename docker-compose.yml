@@ -11,9 +11,10 @@ services:
       COGNITO_CLIENT_ID: "$COGNITO_CLIENT_ID"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://backend:8001/api/v1/health"]
-      interval: 1s
+      interval: 1m
       timeout: 5s
-      retries: 10
+      start_period: 10s
+      start_interval: 1s
     depends_on:
       database:
         condition: "service_healthy"
@@ -37,6 +38,7 @@ services:
       - ".postgres:/var/lib/postgresql/data"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
-      interval: 1s
+      interval: 1m
       timeout: 5s
-      retries: 10
+      start_period: 10s
+      start_interval: 1s
