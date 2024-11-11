@@ -1,7 +1,8 @@
 import { useCallback, useMemo } from "react";
 import { useAuth } from "../auth/AuthContext";
+import { backendIp } from "./env";
 
-const API_BASEPATH = `${import.meta.env.VITE_BACKEND_IP}/api/v1`;
+const API_BASEPATH = `${backendIp}/api/v1`;
 
 export function useApi() {
   const { identity } = useAuth();

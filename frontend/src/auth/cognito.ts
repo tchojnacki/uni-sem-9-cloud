@@ -4,9 +4,9 @@ import {
   SignUpCommand,
 } from "@aws-sdk/client-cognito-identity-provider";
 import { err, ok, Result, resultFromAsync } from "../common/Result";
+import { cognitoClientId } from "../common/env";
 
 const REGION = "us-east-1";
-const CLIENT_ID = import.meta.env.VITE_COGNITO_CLIENT_ID;
 
 const cognitoClient = new CognitoIdentityProviderClient({
   region: REGION,
@@ -27,7 +27,7 @@ export async function logIn(
     cognitoClient.send(
       new InitiateAuthCommand({
         AuthFlow: "USER_PASSWORD_AUTH",
-        ClientId: CLIENT_ID,
+        ClientId: cognitoClientId,
         AuthParameters: {
           USERNAME: username,
           PASSWORD: password,
@@ -56,7 +56,7 @@ export async function signUp(
   const response = await resultFromAsync(() =>
     cognitoClient.send(
       new SignUpCommand({
-        ClientId: CLIENT_ID,
+        ClientId: cognitoClientId,
         Username: username,
         Password: password,
         UserAttributes: [{ Name: "email", Value: email }],

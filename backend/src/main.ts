@@ -4,12 +4,12 @@ import { Router } from "@oak/oak/router";
 import { insertCors } from "./cors.ts";
 import { extractAuth } from "./auth.ts";
 import { Database } from "./database.ts";
+import { databaseUrl } from "./env.ts";
 
 const PORT = 8001;
 const PREFIX = "/api/v1";
 
 if (import.meta.main) {
-  const databaseUrl = Deno.env.get("DATABASE_URL") ?? "";
   const database = await Database.setup(databaseUrl);
 
   const app = new Application();

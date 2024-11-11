@@ -20,7 +20,8 @@ export class Database {
         time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         fk_from UUID REFERENCES account(id),
         fk_to UUID REFERENCES account(id),
-        content TEXT NOT NULL
+        content TEXT NOT NULL,
+        CHECK (fk_from <> fk_to)
       )`;
 
     return new Database(client);
@@ -30,12 +31,12 @@ export class Database {
     await this.client.queryObject`
       INSERT INTO account (id, username)
       VALUES (${id}, ${username})
-      ON CONFLICT DO NOTHING`;
+      ON CONFLICT (id) DO UPDATE SET username = ${username}`;
   }
 
   public async getAccounts(): Promise<Account[]> {
     const { rows } = await this.client
-      .queryObject<Account>`SELECT * FROM account`;
+      .queryObject<Account>`SELECT * FROM account ORDER BY username`;
     return rows;
   }
 }

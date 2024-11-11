@@ -6,7 +6,6 @@
   "imports": {
     "@bartlomieju/postgres": "jsr:@bartlomieju/postgres@^0.17.2",
     "@oak/oak": "jsr:@oak/oak@^17.1.2",
-    "@zaubrik/djwt": "jsr:@zaubrik/djwt@^3.0.2",
     "aws-jwt-verify": "npm:aws-jwt-verify@^4.0.1"
   }
 }
