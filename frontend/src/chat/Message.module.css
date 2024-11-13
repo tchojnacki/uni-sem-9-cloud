@@ -1,0 +1,15 @@
+.message {
+  overflow: initial;
+  align-self: flex-start;
+  text-align: justify;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  background-color: #ddd;
+}
+
+.message[data-mine="true"] {
+  align-self: flex-end;
+  text-align-last: right;
+  background-color: #3b82f6;
+  color: #eee;
+}

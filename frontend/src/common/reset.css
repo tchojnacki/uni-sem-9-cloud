@@ -4,13 +4,14 @@
   margin: 0;
   border: 0;
   border-radius: 0;
+  overflow: hidden;
 
   font-size: inherit;
   font-weight: inherit;
   color: inherit;
   background: transparent;
   text-decoration: inherit;
-  text-align: left;
+  text-align: inherit;
   list-style: none;
 }
 

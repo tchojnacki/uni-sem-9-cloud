@@ -1,6 +1,7 @@
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { useApi } from "../common/api";
 import styles from "./Chat.module.css";
+import { Message } from "./Message";
 
 type Account = {
   id: string;
@@ -44,7 +45,9 @@ export function Chat({ selectedId }: ChatProps) {
         return;
       }
       setContent("");
-      post("/messages", { receiver: selectedId, content });
+      post("/messages", { receiver: selectedId, content }).then((res) =>
+        setMessages((prev) => [...prev, res])
+      );
     },
     [selectedId, content, post]
   );
@@ -58,9 +61,12 @@ export function Chat({ selectedId }: ChatProps) {
       <h2>Chat</h2>
       <section className={styles.messages}>
         {messages.map((m) => (
-          <div key={m.id}>
-            {m.content} {m.time} {String(m.sender === me.id)}
-          </div>
+          <Message
+            key={m.id}
+            time={m.time}
+            isMine={m.sender === me.id}
+            content={m.content}
+          />
         ))}
       </section>
       <form className={styles.send} onSubmit={handleSend}>
@@ -70,7 +76,9 @@ export function Chat({ selectedId }: ChatProps) {
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
-        <button type="submit">Send</button>
+        <button disabled={content.length === 0} type="submit">
+          Send
+        </button>
       </form>
     </main>
   );
