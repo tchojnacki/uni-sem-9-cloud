@@ -14,8 +14,8 @@ export function Users({ selectedId, setSelectedId }: UsersProps) {
   const [me, setMe] = useState<AccountDto | null>(null);
 
   useEffect(() => {
-    get("/accounts").then((res) => setAccounts(res));
-    get("/accounts/me").then((res) => setMe(res));
+    get<AccountDto[]>("/accounts").then((res) => setAccounts(res));
+    get<AccountDto>("/accounts/me").then((res) => setMe(res));
   }, [get]);
 
   if (!me || !accounts) {

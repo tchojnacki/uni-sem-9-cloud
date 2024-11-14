@@ -18,13 +18,13 @@ export function useApi() {
   );
 
   const get = useCallback(
-    (url: string) =>
+    <T>(url: string): Promise<T> =>
       fetch(`${API_BASEPATH}${url}`, { headers }).then((res) => res.json()),
     [headers]
   );
 
   const post = useCallback(
-    (url: string, body: object) =>
+    <T>(url: string, body: object): Promise<T> =>
       fetch(`${API_BASEPATH}${url}`, {
         method: "POST",
         headers: {

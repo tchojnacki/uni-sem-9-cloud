@@ -1,4 +1,4 @@
-import { FormEvent, useCallback, useEffect, useState } from "react";
+import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { useApi } from "../common/api";
 import { AccountDto, MessageDto } from "../common/types";
 import { Message } from "./Message";
@@ -10,21 +10,29 @@ type ChatProps = {
 
 export function Chat({ selectedId }: ChatProps) {
   const { get, post } = useApi();
-
   const [content, setContent] = useState("");
   const [me, setMe] = useState<AccountDto | null>(null);
   const [messages, setMessages] = useState<MessageDto[]>([]);
+  const boxRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    get("/accounts/me").then((res) => setMe(res));
+    get<AccountDto>("/accounts/me").then((res) => setMe(res));
   }, [get]);
 
   useEffect(() => {
     if (selectedId === null) {
       return;
     }
-    get(`/messages/${selectedId}`).then((res) => setMessages(res));
+    get<MessageDto[]>(`/messages/${selectedId}`).then((res) =>
+      setMessages(res)
+    );
   }, [selectedId, get]);
+
+  useEffect(() => {
+    if (boxRef.current) {
+      boxRef.current.scrollTop = boxRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   const handleSend = useCallback(
     (e: FormEvent) => {
@@ -33,8 +41,8 @@ export function Chat({ selectedId }: ChatProps) {
         return;
       }
       setContent("");
-      post("/messages", { receiver: selectedId, content }).then((res) =>
-        setMessages((prev) => [...prev, res])
+      post<MessageDto>("/messages", { receiver: selectedId, content }).then(
+        (res) => setMessages((prev) => [...prev, res])
       );
     },
     [selectedId, content, post]
@@ -47,7 +55,7 @@ export function Chat({ selectedId }: ChatProps) {
   return (
     <main className={styles.chat}>
       <h2>Chat</h2>
-      <section className={styles.messages}>
+      <section className={styles.messages} ref={boxRef}>
         {messages.map((m) => (
           <Message
             key={m.id}
