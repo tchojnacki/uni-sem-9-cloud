@@ -3,7 +3,6 @@ import {
   InitiateAuthCommand,
   SignUpCommand,
 } from "@aws-sdk/client-cognito-identity-provider";
-import { err, ok, Result, resultFromAsync } from "../common/result";
 import { cognitoClientId } from "../common/env";
 
 const REGION = "us-east-1";
@@ -12,19 +11,11 @@ const cognitoClient = new CognitoIdentityProviderClient({
   region: REGION,
 });
 
-type LogInResult = Result<
-  { accessToken: string; refreshToken: string },
-  string
->;
-
-type SignUpResult = Result<null, string>;
-
-export async function logIn(
+export async function cognitoLogIn(
   username: string,
   password: string
-): Promise<LogInResult> {
-  const response = await resultFromAsync(() =>
-    cognitoClient.send(
+): Promise<{accessToken: string; refreshToken: string}> {
+  const response = await  cognitoClient.send(
       new InitiateAuthCommand({
         AuthFlow: "USER_PASSWORD_AUTH",
         ClientId: cognitoClientId,
@@ -33,38 +24,23 @@ export async function logIn(
           PASSWORD: password,
         },
       })
-    )
-  );
-  if (response.tag === "err") {
-    return err((response.err as Error).message);
-  }
-  if (!response.ok.AuthenticationResult) {
-    return err("No authentication result");
-  }
-  const { AccessToken, RefreshToken } = response.ok.AuthenticationResult;
-  if (!AccessToken || !RefreshToken) {
-    return err("No access or refresh token");
-  }
-  return ok({ accessToken: AccessToken, refreshToken: RefreshToken });
+    );
+  const accessToken = response.AuthenticationResult!.AccessToken!;
+  const refreshToken = response.AuthenticationResult!.RefreshToken!;
+  return {accessToken, refreshToken};
 }
 
-export async function signUp(
+export async function cognitoSignUp(
   email: string,
   username: string,
   password: string
-): Promise<SignUpResult> {
-  const response = await resultFromAsync(() =>
-    cognitoClient.send(
-      new SignUpCommand({
-        ClientId: cognitoClientId,
-        Username: username,
-        Password: password,
-        UserAttributes: [{ Name: "email", Value: email }],
-      })
-    )
+): Promise<void> {
+  await cognitoClient.send(
+    new SignUpCommand({
+      ClientId: cognitoClientId,
+      Username: username,
+      Password: password,
+      UserAttributes: [{ Name: "email", Value: email }],
+    })
   );
-  if (response.tag === "err") {
-    return err((response.err as Error).message);
-  }
-  return ok(null);
 }

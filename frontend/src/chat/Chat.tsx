@@ -1,20 +1,8 @@
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import { useApi } from "../common/api";
-import styles from "./Chat.module.css";
+import { AccountDto, MessageDto } from "../common/types";
 import { Message } from "./Message";
-
-type Account = {
-  id: string;
-  username: string;
-};
-
-type Message = {
-  id: string;
-  time: string;
-  sender: string;
-  receiver: string;
-  content: string;
-};
+import styles from "./Chat.module.css";
 
 type ChatProps = {
   selectedId: string | null;
@@ -24,8 +12,8 @@ export function Chat({ selectedId }: ChatProps) {
   const { get, post } = useApi();
 
   const [content, setContent] = useState("");
-  const [me, setMe] = useState<Account | null>(null);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [me, setMe] = useState<AccountDto | null>(null);
+  const [messages, setMessages] = useState<MessageDto[]>([]);
 
   useEffect(() => {
     get("/accounts/me").then((res) => setMe(res));

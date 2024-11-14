@@ -1,5 +1,6 @@
 import { FormEvent, useCallback, useState } from "react";
 import { useAuth } from "./AuthContext";
+import { cognitoLogIn, cognitoSignUp } from "./cognito";
 import styles from "./LoginPage.module.css";
 
 export function LoginPage() {
@@ -16,36 +17,35 @@ export function LoginPage() {
     password.length > 0 &&
     (isLogin || (email.length > 0 && confirm.length > 0));
 
-  const { logIn, signUp } = useAuth();
+  const { setIdentity } = useAuth();
 
   const handleLogIn = useCallback(
-    async (e: FormEvent) => {
+    (e: FormEvent) => {
       e.preventDefault();
       setAlert("");
-      const result = await logIn(username, password);
-      if (result.tag === "err") {
-        setAlert(result.err);
-      }
+      cognitoLogIn(username, password)
+        .then((result) => setIdentity(result))
+        .catch((error) => setAlert(error.message));
     },
     [username, password]
   );
 
   const handleSignUp = useCallback(
-    async (e: FormEvent) => {
+    (e: FormEvent) => {
       e.preventDefault();
       setAlert("");
       if (password !== confirm) {
-        setAlert("Passwords do not match!");
+        setAlert("Passwords do not match.");
         return;
       }
-      const result = await signUp(email, username, password);
-      if (result.tag === "ok") {
-        setIsLogin(true);
-        setEmail("");
-        setConfirm("");
-      } else {
-        setAlert(result.err);
-      }
+      cognitoSignUp(email, username, password)
+        .then(() => {
+          setIsLogin(true);
+          setEmail("");
+          setConfirm("");
+          setAlert("Please confirm your email address.");
+        })
+        .catch((error) => setAlert(error.message));
     },
     [email, username, password, confirm]
   );

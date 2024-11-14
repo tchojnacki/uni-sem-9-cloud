@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useApi } from "../common/api";
+import { AccountDto } from "../common/types";
 import styles from "./Users.module.css";
-
-type Account = { id: string; username: string };
 
 type UsersProps = {
   selectedId: string | null;
@@ -11,8 +10,8 @@ type UsersProps = {
 
 export function Users({ selectedId, setSelectedId }: UsersProps) {
   const { get } = useApi();
-  const [accounts, setAccounts] = useState<Account[] | null>(null);
-  const [me, setMe] = useState<Account | null>(null);
+  const [accounts, setAccounts] = useState<AccountDto[] | null>(null);
+  const [me, setMe] = useState<AccountDto | null>(null);
 
   useEffect(() => {
     get("/accounts").then((res) => setAccounts(res));
