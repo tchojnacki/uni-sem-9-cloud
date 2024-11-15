@@ -9,11 +9,31 @@ type ChatProps = {
 };
 
 export function Chat({ selectedId }: ChatProps) {
-  const { get, post } = useApi();
+  const { get, post, createSocket } = useApi();
   const [content, setContent] = useState("");
   const [me, setMe] = useState<AccountDto | null>(null);
   const [messages, setMessages] = useState<MessageDto[]>([]);
   const boxRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const socket = createSocket();
+
+    socket.addEventListener("message", (event) => {
+      try {
+        const { type, data } = JSON.parse(event.data);
+        if (type === "new-message") {
+          const message = data as MessageDto;
+          if (message.sender === selectedId) {
+            setMessages((prev) => [...prev, message]);
+          }
+        }
+      } catch {
+        // Ignore
+      }
+    });
+
+    return () => socket.close();
+  }, [selectedId, createSocket]);
 
   useEffect(() => {
     get<AccountDto>("/accounts/me").then((res) => setMe(res));

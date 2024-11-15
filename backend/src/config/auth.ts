@@ -1,11 +1,13 @@
 import { Middleware } from "@oak/oak/middleware";
 import { Database } from "../database.ts";
+import { Verifier } from "../types.ts";
 
-type Verifier = {
-  verify(token: string): Promise<{ sub: string; username: string }>;
+type AuthArgs = {
+  verifier: Verifier;
+  database: Database;
 };
 
-export function auth(verifier: Verifier, database: Database): Middleware {
+export function auth({ verifier, database }: AuthArgs): Middleware {
   return async (ctx, next) => {
     ctx.state.sub = null;
     ctx.state.username = null;

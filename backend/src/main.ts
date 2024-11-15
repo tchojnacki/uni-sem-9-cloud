@@ -6,8 +6,11 @@ if (import.meta.main) {
       port: 8001,
       prefix: "/api/v1",
     },
-    ({ router, database }) => {
-      router.get("/health", (ctx) => (ctx.response.body = { status: "OK" }));
+    ({ router, database, observer }) => {
+      router.get("/health", (ctx) => {
+        console.log(`HEALTHCHECK: ${observer.countListeners()} listeners`);
+        ctx.response.body = { status: "OK" };
+      });
 
       router.get("/accounts", async (ctx) => {
         if (!ctx.state.sub) {
@@ -52,6 +55,7 @@ if (import.meta.main) {
             receiver,
             content
           );
+          observer.notifyListener(receiver, "new-message", message);
           ctx.response.status = 201;
           ctx.response.body = message;
         } catch {

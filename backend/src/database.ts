@@ -1,13 +1,5 @@
 import { Client } from "@bartlomieju/postgres";
-
-type Account = { id: string; username: string };
-type Message = {
-  id: number;
-  time: Date;
-  sender: string;
-  receiver: string;
-  content: string;
-};
+import { Account, Message } from "./types.ts";
 
 export class Database {
   private constructor(private readonly client: Client) {}

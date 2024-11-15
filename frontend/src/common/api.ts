@@ -36,5 +36,15 @@ export function useApi() {
     [headers]
   );
 
-  return { get, post };
+  const createSocket = useCallback(() => {
+    const socket = new WebSocket(`${API_BASEPATH}/ws`);
+    socket.addEventListener("open", () => {
+      if (!identity) return;
+      const event = { type: "authenticate", data: identity.accessToken };
+      socket.send(JSON.stringify(event));
+    });
+    return socket;
+  }, [identity]);
+
+  return { get, post, createSocket };
 }
