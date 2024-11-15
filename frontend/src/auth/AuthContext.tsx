@@ -1,9 +1,5 @@
-import {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useState,
-} from "react";
+import { createContext, PropsWithChildren, useContext } from "react";
+import { useSessionStorage } from "usehooks-ts";
 
 type Identity = { accessToken: string; refreshToken: string } | null;
 type AuthData = {
@@ -21,7 +17,7 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }: PropsWithChildren) {
-  const [identity, setIdentity] = useState<Identity>(null);
+  const [identity, setIdentity] = useSessionStorage<Identity>("IDENTITY", null);
 
   return (
     <AuthContext.Provider value={{ identity, setIdentity }}>

@@ -1,6 +1,14 @@
-import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
+import {
+  FormEvent,
+  RefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useApi } from "../common/api";
-import { AccountDto, MessageDto } from "../common/types";
+import { MessageDto } from "../common/types";
+import { useMe } from "../common/use-me";
 import { Message } from "./Message";
 import styles from "./Chat.module.css";
 
@@ -8,12 +16,21 @@ type ChatProps = {
   selectedId: string | null;
 };
 
-export function Chat({ selectedId }: ChatProps) {
+function useMessages(selectedId: string | null): {
+  messages: MessageDto[];
+  send: (content: string) => void;
+} {
   const { get, post, createSocket } = useApi();
-  const [content, setContent] = useState("");
-  const [me, setMe] = useState<AccountDto | null>(null);
   const [messages, setMessages] = useState<MessageDto[]>([]);
-  const boxRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (selectedId === null) {
+      return;
+    }
+    get<MessageDto[]>(`/messages/${selectedId}`).then((res) =>
+      setMessages(res)
+    );
+  }, [selectedId, get]);
 
   useEffect(() => {
     const socket = createSocket();
@@ -35,24 +52,35 @@ export function Chat({ selectedId }: ChatProps) {
     return () => socket.close();
   }, [selectedId, createSocket]);
 
-  useEffect(() => {
-    get<AccountDto>("/accounts/me").then((res) => setMe(res));
-  }, [get]);
+  const send = useCallback(
+    (content: string) => {
+      post<MessageDto>("/messages", { receiver: selectedId, content }).then(
+        (res) => setMessages((prev) => [...prev, res])
+      );
+    },
+    [selectedId, post]
+  );
+
+  return { messages, send };
+}
+
+function useAutoScroll(dependencies: any[]): RefObject<HTMLElement> {
+  const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (selectedId === null) {
-      return;
+    if (ref.current) {
+      ref.current.scrollTop = ref.current.scrollHeight;
     }
-    get<MessageDto[]>(`/messages/${selectedId}`).then((res) =>
-      setMessages(res)
-    );
-  }, [selectedId, get]);
+  }, dependencies);
 
-  useEffect(() => {
-    if (boxRef.current) {
-      boxRef.current.scrollTop = boxRef.current.scrollHeight;
-    }
-  }, [messages]);
+  return ref;
+}
+
+export function Chat({ selectedId }: ChatProps) {
+  const { messages, send } = useMessages(selectedId);
+  const boxRef = useAutoScroll([messages]);
+  const me = useMe();
+  const [content, setContent] = useState("");
 
   const handleSend = useCallback(
     (e: FormEvent) => {
@@ -61,11 +89,9 @@ export function Chat({ selectedId }: ChatProps) {
         return;
       }
       setContent("");
-      post<MessageDto>("/messages", { receiver: selectedId, content }).then(
-        (res) => setMessages((prev) => [...prev, res])
-      );
+      send(content);
     },
-    [selectedId, content, post]
+    [selectedId, content, send]
   );
 
   if (me === null || selectedId === null) {

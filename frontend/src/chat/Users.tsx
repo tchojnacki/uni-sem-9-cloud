@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useApi } from "../common/api";
 import { AccountDto } from "../common/types";
+import { useMe } from "../common/use-me";
 import styles from "./Users.module.css";
 
 type UsersProps = {
@@ -8,15 +9,20 @@ type UsersProps = {
   setSelectedId: (id: string | null) => void;
 };
 
-export function Users({ selectedId, setSelectedId }: UsersProps) {
+function useAccounts(): AccountDto[] | null {
   const { get } = useApi();
-  const [accounts, setAccounts] = useState<AccountDto[] | null>(null);
-  const [me, setMe] = useState<AccountDto | null>(null);
+  const [accounts, setAccounts] = useState<AccountDto[] | null>([]);
 
   useEffect(() => {
     get<AccountDto[]>("/accounts").then((res) => setAccounts(res));
-    get<AccountDto>("/accounts/me").then((res) => setMe(res));
   }, [get]);
+
+  return accounts;
+}
+
+export function Users({ selectedId, setSelectedId }: UsersProps) {
+  const accounts = useAccounts();
+  const me = useMe();
 
   if (!me || !accounts) {
     return (
