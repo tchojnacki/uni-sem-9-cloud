@@ -21,6 +21,9 @@ locals {
     repo = "cloud-p1"
   }
   ec2_common_setup = <<-SETUPEOF
+  #!/bin/env bash
+  set -x
+
   # Update and install packages
   apt-get update -y
   apt-get install -y ca-certificates curl
