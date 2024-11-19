@@ -8,7 +8,12 @@ resource "aws_instance" "ec2_front_instance" {
   user_data                   = <<-USERDATAEOF
   #!/bin/env bash
 
-  ${locals.ec2_common_setup}
+  ${local.ec2_common_setup}
+
+  export BACKEND_IP="${aws_instance.ec2_back_instance.public_ip}"
+  export COGNITO_CLIENT_ID="${aws_cognito_user_pool_client.cognito_user_pool_client.id}"
+  echo "$BACKEND_IP $COGNITO_CLIENT_ID"
+
   USERDATAEOF
 
   tags = {

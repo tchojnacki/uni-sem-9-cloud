@@ -16,6 +16,10 @@ locals {
     db_name  = "cloudp1"
     username = "postgres"
   }
+  github = {
+    user = "tchojnacki"
+    repo = "cloud-p1"
+  }
   ec2_common_setup = <<-SETUPEOF
   # Update and install packages
   apt-get update -y
@@ -33,5 +37,10 @@ locals {
 
   # Install Docker
   apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+  # Clone the repository
+  cd ~
+  git clone https://${var.github_token}@github.com/${local.github.user}/${local.github.repo}.git
+  cd cloud-p1
   SETUPEOF
 }

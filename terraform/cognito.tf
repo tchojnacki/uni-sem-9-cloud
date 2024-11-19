@@ -1,4 +1,3 @@
-
 resource "aws_cognito_user_pool" "cognito_user_pool" {
   name                     = "CloudP1 User Pool"
   auto_verified_attributes = ["email"]
