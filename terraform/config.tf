@@ -3,9 +3,8 @@ locals {
   instance_ami  = "ami-0866a3c8686eaeeba" # Ubuntu Server 24.04 LTS 64-bit (x86)
   instance_type = "t2.micro"
   open_ports = {
-    ssh        = 22
-    http       = 80
-    postgresql = 5432
+    ssh  = 22
+    http = 80
   }
   database = {
     engine  = "postgres"

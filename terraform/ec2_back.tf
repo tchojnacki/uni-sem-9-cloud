@@ -1,6 +1,8 @@
 resource "aws_instance" "ec2_back_instance" {
-  ami                    = local.instance_ami
-  instance_type          = local.instance_type
+  ami           = local.instance_ami
+  instance_type = local.instance_type
+
+  subnet_id              = aws_subnet.vpc_public_subnet.id
   vpc_security_group_ids = [aws_security_group.vpc_security_group.id]
   key_name               = "vockey"
 
