@@ -8,7 +8,7 @@ resource "aws_instance" "ec2_back_instance" {
   user_data                   = <<-USERDATAEOF
   ${local.ec2_common_setup}
 
-  export DATABASE_URL="postgresql://${aws_db_instance.rds_instance.endpoint}/${local.database.db_name}?user=${local.database.username}?password=${var.database_password}"
+  export DATABASE_URL="postgresql://${aws_db_instance.rds_instance.endpoint}/${local.database.db_name}?user=${local.database.username}&password=${var.database_password}"
   export COGNITO_POOL_ID="${aws_cognito_user_pool.cognito_user_pool.id}"
   export COGNITO_CLIENT_ID="${aws_cognito_user_pool_client.cognito_user_pool_client.id}"
   echo "DATABASE_URL=$DATABASE_URL COGNITO_POOL_ID=$COGNITO_POOL_ID COGNITO_CLIENT_ID=$COGNITO_CLIENT_ID"

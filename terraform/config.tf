@@ -9,7 +9,7 @@ locals {
   }
   database = {
     engine  = "postgres"
-    version = "16.3"
+    version = "14.14"
     class   = "db.t3.micro"
     storage = 5 # GB
 

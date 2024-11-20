@@ -1,15 +1,11 @@
 import { Client } from "@bartlomieju/postgres";
 import { Account, Message } from "./types.ts";
-import { AWS_GLOBAL_PEM } from "./config/pem.ts";
 
 export class Database {
   private constructor(private readonly client: Client) {}
 
   public static async setup(connectionString: string): Promise<Database> {
-    const client = new Client({
-      options: { connectionString },
-      tls: { caCertificates: [AWS_GLOBAL_PEM] },
-    });
+    const client = new Client(connectionString);
     await client.connect();
 
     await client.queryObject`

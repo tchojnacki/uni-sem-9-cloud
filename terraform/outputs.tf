@@ -15,5 +15,5 @@ output "FRONTEND_IP" {
 }
 
 output "DATABASE_URL" {
-  value = "postgresql://${aws_db_instance.rds_instance.endpoint}/${local.database.db_name}?user=${local.database.username}?password=${var.database_password}"
+  value = "postgresql://${aws_db_instance.rds_instance.endpoint}/${local.database.db_name}?user=${local.database.username}&password=${var.database_password}"
 }
