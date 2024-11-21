@@ -51,7 +51,7 @@ resource "aws_vpc_security_group_egress_rule" "vpc_egress_rule" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "vpc_ingress_rule" {
-  for_each = local.open_ports
+  for_each = var.open_ports
 
   security_group_id = aws_security_group.vpc_security_group.id
 

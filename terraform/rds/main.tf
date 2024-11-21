@@ -1,19 +1,19 @@
 resource "aws_db_instance" "rds_instance" {
   identifier             = "cloudp1-rds"
-  engine                 = local.database.engine
-  engine_version         = local.database.version
-  instance_class         = local.database.class
-  allocated_storage      = local.database.storage
-  db_name                = local.database.db_name
-  username               = local.database.username
-  password               = var.database_password
+  engine                 = "postgres"
+  engine_version         = "14.14"
+  instance_class         = "db.t3.micro"
+  allocated_storage      = 5 # GB
+  db_name                = "cloudp1"
+  username               = "postgres"
+  password               = var.password
   skip_final_snapshot    = true
   publicly_accessible    = true
   vpc_security_group_ids = [aws_security_group.rds_security_group.id]
 }
 
 resource "aws_security_group" "rds_security_group" {
-  name = "Cloud1 RDS Security Group"
+  name = "CloudP1 RDS Security Group"
 
   ingress {
     protocol    = "tcp"
