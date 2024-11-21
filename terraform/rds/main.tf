@@ -13,7 +13,7 @@ resource "aws_db_instance" "rds_instance" {
 }
 
 resource "aws_security_group" "rds_security_group" {
-  name = "CloudP1 RDS Security Group"
+  name = "cloudp1-rds-security-group"
 
   ingress {
     protocol    = "tcp"

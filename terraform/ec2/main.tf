@@ -10,6 +10,6 @@ resource "aws_instance" "ec2_instance" {
   user_data                   = var.user_data
 
   tags = {
-    Name = "CloudP1 EC2 ${var.name}"
+    Name = "cloudp1-ec2-${var.name}"
   }
 }

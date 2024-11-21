@@ -1,5 +1,5 @@
 resource "aws_cognito_user_pool" "cognito_user_pool" {
-  name                     = "CloudP1 User Pool"
+  name                     = "cloudp1-user-pool"
   auto_verified_attributes = ["email"]
   password_policy {
     minimum_length    = 6
@@ -14,7 +14,7 @@ resource "aws_cognito_user_pool" "cognito_user_pool" {
 }
 
 resource "aws_cognito_user_pool_client" "cognito_user_pool_client" {
-  name                = "CloudP1 User Pool Client"
+  name                = "cloudp1-user-pool-client"
   user_pool_id        = aws_cognito_user_pool.cognito_user_pool.id
   explicit_auth_flows = ["ALLOW_USER_PASSWORD_AUTH", "ALLOW_REFRESH_TOKEN_AUTH"]
 }

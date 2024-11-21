@@ -49,7 +49,7 @@ locals {
 module "ec2_back" {
   source = "./ec2"
 
-  name              = "Backend"
+  name              = "backend"
   subnet_id         = module.vpc.public_subnet_id
   security_group_id = module.vpc.security_group_id
   user_data         = <<-USERDATAEOF
@@ -69,7 +69,7 @@ module "ec2_back" {
 module "ec2_front" {
   source = "./ec2"
 
-  name              = "Frontend"
+  name              = "frontend"
   subnet_id         = module.vpc.public_subnet_id
   security_group_id = module.vpc.security_group_id
   user_data         = <<-USERDATAEOF
