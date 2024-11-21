@@ -25,7 +25,7 @@ services:
     ports:
       - "8002:8002"
     environment:
-      VITE_BACKEND_IP: "http://localhost:8001"
+      VITE_BACKEND_IP: "localhost:8001"
       VITE_COGNITO_CLIENT_ID: "$COGNITO_CLIENT_ID"
     depends_on:
       backend:
