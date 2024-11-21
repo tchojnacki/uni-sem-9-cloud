@@ -197,8 +197,44 @@ Każda z instancji EC2 dostaje user data, które kolejno: aktualizuje pakiety, i
 
 === VPC
 
+#v(1fr)
+#image("./img/vpc-1.png")
+#v(1fr)
+#image("./img/vpc-2.png")
+#v(1fr)
+#image("./img/vpc-3.png")
+#v(1fr)
+
 === RDS
+
+#v(1fr)
+#image("./img/rds-1.png")
+#v(1fr)
+#image("./img/rds-2.png")
+#v(1fr)
+#image("./img/rds-3.png")
+#v(1fr)
 
 === Cognito
 
+#v(1fr)
+#image("./img/cognito-1.png")
+#v(1fr)
+#image("./img/cognito-2.png")
+#v(1fr)
+#image("./img/cognito-3.png")
+#v(1fr)
+#image("./img/cognito-4.png")
+#v(1fr)
+#image("./img/cognito-5.png")
+#v(1fr)
+#image("./img/cognito-6.png")
+#v(1fr)
+
 === EC2
+
+#v(1fr)
+#image("./img/ec2-1.png")
+#v(1fr)
+#image("./img/ec2-2.png")
+#v(1fr)
