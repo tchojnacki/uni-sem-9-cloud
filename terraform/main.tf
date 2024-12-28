@@ -38,11 +38,6 @@ locals {
 
   # Install Docker
   apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-  # Clone the repository
-  cd ~
-  git clone https://${var.github_token}@github.com/tchojnacki/cloud-p1.git
-  cd cloud-p1
   SETUPEOF
 }
 
@@ -61,8 +56,7 @@ module "ec2_back" {
   echo "DATABASE_URL=$DATABASE_URL COGNITO_POOL_ID=$COGNITO_POOL_ID COGNITO_CLIENT_ID=$COGNITO_CLIENT_ID"
 
   cd backend
-  docker build -f ./Dockerfile.prod -t cloudp1-backend-prod .
-  docker run -d -e DATABASE_URL -e COGNITO_POOL_ID -e COGNITO_CLIENT_ID -p 80:8001 cloudp1-backend-prod
+  docker run -d -e DATABASE_URL -e COGNITO_POOL_ID -e COGNITO_CLIENT_ID -p 80:8001 tchojnacki2001/cloudp2-backend-prod
   USERDATAEOF
 }
 
@@ -80,7 +74,6 @@ module "ec2_front" {
   echo "VITE_BACKEND_IP=$VITE_BACKEND_IP VITE_COGNITO_CLIENT_ID=$VITE_COGNITO_CLIENT_ID"
 
   cd frontend
-  docker build -f ./Dockerfile -t cloudp1-frontend-prod .
-  docker run -d -e VITE_BACKEND_IP -e VITE_COGNITO_CLIENT_ID -p 80:8002 cloudp1-frontend-prod
+  docker run -d -e VITE_BACKEND_IP -e VITE_COGNITO_CLIENT_ID -p 80:8002 tchojnacki2001/cloudp2-frontend-prod
   USERDATAEOF
 }
