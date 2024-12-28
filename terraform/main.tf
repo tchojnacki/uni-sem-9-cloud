@@ -75,12 +75,12 @@ module "ec2_front" {
   user_data         = <<-USERDATAEOF
   ${local.ec2_common_setup}
 
-  export BACKEND_IP="${module.ec2_back.public_ip}"
-  export COGNITO_CLIENT_ID="${module.cognito.user_pool_client_id}"
-  echo "BACKEND_IP=$BACKEND_IP COGNITO_CLIENT_ID=$COGNITO_CLIENT_ID"
+  export VITE_BACKEND_IP="${module.ec2_back.public_ip}"
+  export VITE_COGNITO_CLIENT_ID="${module.cognito.user_pool_client_id}"
+  echo "VITE_BACKEND_IP=$VITE_BACKEND_IP VITE_COGNITO_CLIENT_ID=$VITE_COGNITO_CLIENT_ID"
 
   cd frontend
-  docker build -f ./Dockerfile.prod --build-arg BACKEND_IP --build-arg COGNITO_CLIENT_ID -t cloudp1-frontend-prod .
-  docker run -d -p 80:8002 cloudp1-frontend-prod
+  docker build -f ./Dockerfile -t cloudp1-frontend-prod .
+  docker run -d -e VITE_BACKEND_IP -e VITE_COGNITO_CLIENT_ID -p 80:8002 cloudp1-frontend-prod
   USERDATAEOF
 }

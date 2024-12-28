@@ -12,7 +12,7 @@ export function TopBar() {
       {identity ? (
         <nav className={styles.panel}>
           <button onClick={() => setIdentity(null)}>
-            Logout ({me?.username ?? "Loading..."})
+            Logout {me ? `(${me.username})` : ""}
           </button>
         </nav>
       ) : null}
