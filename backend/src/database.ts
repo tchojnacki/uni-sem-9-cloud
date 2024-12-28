@@ -20,7 +20,6 @@ export class Database {
         sender UUID REFERENCES account(id),
         receiver UUID REFERENCES account(id),
         content TEXT NOT NULL,
-        CHECK (sender <> receiver),
         CHECK (length(content) > 0)
       )`;
 

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useApi } from "../common/api";
 import { AccountDto } from "../common/types";
-import { useMe } from "../common/use-me";
 import styles from "./Users.module.css";
 
 type UsersProps = {
@@ -22,9 +21,8 @@ function useAccounts(): AccountDto[] | null {
 
 export function Users({ selectedId, setSelectedId }: UsersProps) {
   const accounts = useAccounts();
-  const me = useMe();
 
-  if (!me || !accounts) {
+  if (!accounts) {
     return (
       <aside className={styles.users}>
         <h2>Loading...</h2>
@@ -41,7 +39,7 @@ export function Users({ selectedId, setSelectedId }: UsersProps) {
             <button
               onClick={() => setSelectedId(a.id)}
               className={a.id === selectedId ? styles.active : ""}
-              disabled={a.id === me.id || a.id === selectedId}
+              disabled={a.id === selectedId}
             >
               {a.username}
             </button>

@@ -33,10 +33,6 @@ if (import.meta.main) {
           ctx.response.status = 401;
           return;
         }
-        if (ctx.state.sub === ctx.params.id) {
-          ctx.response.status = 400;
-          return;
-        }
         ctx.response.body = await database.selectMessages(
           ctx.state.sub,
           ctx.params.id
@@ -48,14 +44,17 @@ if (import.meta.main) {
           ctx.response.status = 401;
           return;
         }
+        const sender = ctx.state.sub;
         try {
           const { receiver, content } = await ctx.request.body.json();
           const message = await database.insertMessage(
-            ctx.state.sub,
+            sender,
             receiver,
             content
           );
-          observer.notifyListener(receiver, "new-message", message);
+          if (sender !== receiver) {
+            observer.notifyListener(receiver, "new-message", message);
+          }
           ctx.response.status = 201;
           ctx.response.body = message;
         } catch {
