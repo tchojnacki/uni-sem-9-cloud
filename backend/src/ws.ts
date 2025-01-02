@@ -1,5 +1,5 @@
 import { Router } from "@oak/oak/router";
-import { Observer, Verifier } from "./types.ts";
+import { Message, Verifier } from "./types.ts";
 
 type WsArgs = {
   router: Router;
@@ -8,7 +8,7 @@ type WsArgs = {
 
 type Client = WebSocket & { sub: string | null };
 
-export function setupWs({ router, verifier }: WsArgs): Observer {
+export function setupWs({ router, verifier }: WsArgs) {
   const clients = new Map<string, Client>();
 
   router.get("/ws", (ctx) => {
@@ -41,10 +41,11 @@ export function setupWs({ router, verifier }: WsArgs): Observer {
     });
   });
 
-  const notifyListener = (sub: string, type: string, data: unknown) => {
+  const notifyListener = (sub: string, message: Message) => {
     const client = clients.get(sub);
     if (client) {
-      client.send(JSON.stringify({ type, data }));
+      const payload = JSON.stringify({ type: "new-message", data: message });
+      client.send(payload);
     }
   };
 

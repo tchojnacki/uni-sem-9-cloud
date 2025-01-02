@@ -3,29 +3,28 @@ import { Message } from "./types.ts";
 
 type Client = ReturnType<typeof createClient>;
 
+const wrap = (instance: Client): Promise<Client> =>
+  instance.on("error", (err) => console.error("BS: ", err)).connect();
+
 export class Bus {
   private constructor(private readonly client: Client) {}
 
   public static async setup(connectionString: string): Promise<Bus> {
-    const client = await createClient({ url: connectionString })
-      .on("error", (err) => console.error(err))
-      .connect();
+    const client = await wrap(createClient({ url: connectionString }));
     return new Bus(client);
   }
 
-  public async notify(message: Message): Promise<void> {
-    console.log(`BS: notify ${JSON.stringify(message)}`);
-    await this.client.publish("message-bus", JSON.stringify(message));
+  public async pubMessage(message: Message): Promise<void> {
+    const data = JSON.stringify(message);
+    console.log(`BS: pub ${data}`);
+    await this.client.publish("message-bus", data);
   }
 
-  public async onMessage(callback: (message: Message) => void): Promise<void> {
-    const subscriber = await this.client
-      .duplicate()
-      .on("error", (err) => console.error(err))
-      .connect();
+  public async subMessage(callback: (message: Message) => void): Promise<void> {
+    const subscriber = await wrap(this.client.duplicate());
     await subscriber.subscribe("message-bus", (data) => {
-      console.log(`BS: received ${data}`);
       const message = JSON.parse(data);
+      console.log(`BS: sub ${data}`);
       callback(message);
     });
   }
