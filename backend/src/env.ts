@@ -10,3 +10,4 @@ const readEnv = (key: string): string => {
 export const databaseUrl = readEnv("DATABASE_URL");
 export const cognitoPoolId = readEnv("COGNITO_POOL_ID");
 export const cognitoClientId = readEnv("COGNITO_CLIENT_ID");
+export const busUrl = readEnv("BUS_URL");

@@ -1,6 +1,6 @@
 import { Middleware } from "@oak/oak/middleware";
-import { Database } from "../database.ts";
-import { Verifier } from "../types.ts";
+import { Database } from "./database.ts";
+import { Verifier } from "./types.ts";
 
 type AuthArgs = {
   verifier: Verifier;

@@ -1,5 +1,5 @@
 import { Router } from "@oak/oak/router";
-import { Observer, Verifier } from "../types.ts";
+import { Observer, Verifier } from "./types.ts";
 
 type WsArgs = {
   router: Router;

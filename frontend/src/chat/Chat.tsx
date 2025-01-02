@@ -9,8 +9,8 @@ import {
 import { useApi } from "../common/api";
 import { MessageDto } from "../common/types";
 import { useMe } from "../common/use-me";
-import { Message } from "./Message";
 import styles from "./Chat.module.css";
+import { Message } from "./Message";
 
 type ChatProps = {
   selectedId: string | null;
@@ -40,7 +40,9 @@ function useMessages(selectedId: string | null): {
         const { type, data } = JSON.parse(event.data);
         if (type === "new-message") {
           const message = data as MessageDto;
-          if (message.sender === selectedId) {
+          if (
+            [message.sender, message.receiver].includes(selectedId as string)
+          ) {
             setMessages((prev) => [...prev, message]);
           }
         }
@@ -54,9 +56,7 @@ function useMessages(selectedId: string | null): {
 
   const send = useCallback(
     (content: string) => {
-      post<MessageDto>("/messages", { receiver: selectedId, content }).then(
-        (res) => setMessages((prev) => [...prev, res])
-      );
+      post<MessageDto>("/messages", { receiver: selectedId, content });
     },
     [selectedId, post]
   );
