@@ -2,7 +2,7 @@ resource "aws_db_instance" "rds_instance" {
   identifier             = "cloudp1-rds"
   engine                 = "postgres"
   engine_version         = "14.14"
-  instance_class         = "db.t3.micro"
+  instance_class         = "db.t4g.micro"
   allocated_storage      = 5 # GB
   db_name                = "cloudp1"
   username               = "postgres"
