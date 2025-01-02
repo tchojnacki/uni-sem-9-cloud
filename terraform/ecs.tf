@@ -30,7 +30,7 @@ module "ecs_backend" {
   health_check      = "/api/v1/health"
   cluster_id        = aws_ecs_cluster.ecs_cluster.id
   vpc_id            = module.vpc.vpc_id
-  subnet_ids        = [module.vpc.public_subnet_a_id, module.vpc.public_subnet_b_id]
+  subnet_ids        = module.vpc.public_subnet_ids
   security_group_id = module.vpc.security_group_id
 }
 
@@ -54,6 +54,6 @@ module "ecs_frontend" {
   health_check      = "/"
   cluster_id        = aws_ecs_cluster.ecs_cluster.id
   vpc_id            = module.vpc.vpc_id
-  subnet_ids        = [module.vpc.public_subnet_a_id, module.vpc.public_subnet_b_id]
+  subnet_ids        = module.vpc.public_subnet_ids
   security_group_id = module.vpc.security_group_id
 }

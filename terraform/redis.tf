@@ -1,6 +1,6 @@
 resource "aws_elasticache_subnet_group" "redis_subnet_group" {
   name       = "cloud-p2-redis-subnet-group"
-  subnet_ids = [module.vpc.public_subnet_a_id, module.vpc.public_subnet_b_id]
+  subnet_ids = module.vpc.public_subnet_ids
 }
 
 resource "aws_elasticache_cluster" "redis_instance" {

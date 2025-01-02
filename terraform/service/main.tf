@@ -1,4 +1,3 @@
-
 resource "aws_ecs_task_definition" "service_task_definition" {
   family                   = "cloud-p2-${var.name}-family"
   requires_compatibilities = ["FARGATE"]
@@ -65,6 +64,7 @@ resource "aws_lb_listener" "service_listener" {
   load_balancer_arn = aws_lb.service_load_balancer.arn
   port              = 80
   protocol          = "HTTP"
+
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.service_target_group.arn
