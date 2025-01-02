@@ -6,6 +6,7 @@ module "vpc" {
     http     = 80
     backend  = 8001
     frontend = 8002
+    redis    = 6379
   }
 }
 

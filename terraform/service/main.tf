@@ -66,15 +66,7 @@ resource "aws_lb_listener" "service_listener" {
   port              = 80
   protocol          = "HTTP"
   default_action {
-    type = "forward"
-    forward {
-      target_group {
-        arn = aws_lb_target_group.service_target_group.arn
-      }
-      stickiness {
-        enabled  = true
-        duration = 3600
-      }
-    }
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.service_target_group.arn
   }
 }

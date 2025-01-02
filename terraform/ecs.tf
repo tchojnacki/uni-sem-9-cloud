@@ -20,6 +20,10 @@ module "ecs_backend" {
     {
       name  = "COGNITO_CLIENT_ID"
       value = module.cognito.user_pool_client_id
+    },
+    {
+      name  = "BUS_URL"
+      value = "redis://${aws_elasticache_cluster.redis_instance.cache_nodes.0.address}:6379"
     }
   ]
   desired_count     = 2

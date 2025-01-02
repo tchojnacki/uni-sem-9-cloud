@@ -4,8 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build"
+    "start": "tsc -b && vite build && vite preview"
   },
   "dependencies": {
     "@aws-sdk/client-cognito-identity-provider": "^3.682.0",

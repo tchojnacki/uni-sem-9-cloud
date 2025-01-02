@@ -1,16 +1,3 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.0"
-    }
-  }
-}
-
-provider "aws" {
-  region = "us-east-1"
-}
-
 resource "aws_cognito_user_pool" "user_pool" {
   name                     = "CloudUserPool DEV"
   auto_verified_attributes = ["email"]
