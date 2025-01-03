@@ -12,4 +12,4 @@ COPY deno.json deno.lock ./
 RUN deno install
 
 COPY . .
-CMD ["deno", "task", "dev"]
+CMD ["deno", "task", "start"]

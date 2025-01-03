@@ -4,8 +4,16 @@ import { CognitoJwtVerifier } from "aws-jwt-verify";
 import { auth } from "./auth.ts";
 import { Bus } from "./bus.ts";
 import { Database } from "./database.ts";
-import { busUrl, cognitoClientId, cognitoPoolId, databaseUrl } from "./env.ts";
+import {
+  adminmsgQueueUrl,
+  analysisQueueUrl,
+  busUrl,
+  cognitoClientId,
+  cognitoPoolId,
+  databaseUrl,
+} from "./env.ts";
 import { cors, instanceId, logging } from "./middlewares.ts";
+import { Queue } from "./queue.ts";
 import { setupWs } from "./ws.ts";
 
 if (import.meta.main) {
@@ -22,6 +30,9 @@ if (import.meta.main) {
 
   const bus = await Bus.setup(busUrl);
 
+  const analysisQueue = new Queue(analysisQueueUrl);
+  const adminmsgQueue = new Queue(adminmsgQueueUrl);
+
   const app = new Application();
   app.use(cors());
   app.use(logging());
@@ -32,15 +43,18 @@ if (import.meta.main) {
 
   const ws = setupWs({ router, verifier });
 
-  bus.subMessage((message) => {
+  await bus.subMessage((message) => {
     ws.notifyListener(message.receiver, message);
     if (message.sender !== message.receiver) {
       ws.notifyListener(message.sender, message);
     }
   });
 
+  adminmsgQueue.receive((message) => {
+    console.log("TODO", message);
+  });
+
   router.get("/health", (ctx) => {
-    console.log(`HEALTHCHECK: ${ws.countListeners()} listeners`);
     ctx.response.body = { status: "OK" };
   });
 
@@ -80,7 +94,8 @@ if (import.meta.main) {
     try {
       const { receiver, content } = await ctx.request.body.json();
       const message = await database.insertMessage(sender, receiver, content);
-      bus.pubMessage(message);
+      await bus.pubMessage(message);
+      await analysisQueue.send(message);
       ctx.response.status = 201;
       ctx.response.body = message;
     } catch {

@@ -24,6 +24,14 @@ module "ecs_backend" {
     {
       name  = "BUS_URL"
       value = "redis://${aws_elasticache_cluster.redis_instance.cache_nodes.0.address}:6379"
+    },
+    {
+      name  = "ANALYSIS_QUEUE_URL"
+      value = aws_sqs_queue.sqs_queue["analysis"].id
+    },
+    {
+      name  = "ADMINMSG_QUEUE_URL"
+      value = aws_sqs_queue.sqs_queue["adminmsg"].id
     }
   ]
   desired_count     = 2

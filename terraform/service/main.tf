@@ -1,9 +1,15 @@
+data "aws_iam_role" "service_role" {
+  name = "LabRole"
+}
+
 resource "aws_ecs_task_definition" "service_task_definition" {
   family                   = "cloud-p2-${var.name}-family"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
   cpu                      = 256
   memory                   = 512
+  task_role_arn            = data.aws_iam_role.service_role.arn
+  execution_role_arn       = data.aws_iam_role.service_role.arn
   container_definitions = jsonencode([
     {
       name         = var.name
@@ -12,6 +18,15 @@ resource "aws_ecs_task_definition" "service_task_definition" {
       memory       = 512
       portMappings = [{ containerPort = var.port }]
       environment  = var.environment
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          "awslogs-create-group"  = "true"
+          "awslogs-group"         = "/ecs/cloud-p2/prod"
+          "awslogs-region"        = "us-east-1"
+          "awslogs-stream-prefix" = var.name
+        }
+      }
     }
   ])
 }
@@ -56,7 +71,8 @@ resource "aws_lb_target_group" "service_target_group" {
   vpc_id      = var.vpc_id
 
   health_check {
-    path = var.health_check
+    path     = var.health_check
+    interval = 300
   }
 }
 

@@ -1,9 +1,10 @@
 {
   "tasks": {
-    "dev": "deno run --allow-net --allow-env src/main.ts",
-    "compile": "deno compile --allow-net --allow-env --output server src/main.ts"
+    "start": "deno run -A src/main.ts"
   },
+  "nodeModulesDir": "auto",
   "imports": {
+    "@aws-sdk/client-sqs": "npm:@aws-sdk/client-sqs@^3.721.0",
     "@bartlomieju/postgres": "jsr:@bartlomieju/postgres@^0.17.2",
     "@oak/oak": "jsr:@oak/oak@^17.1.2",
     "aws-jwt-verify": "npm:aws-jwt-verify@^4.0.1",

@@ -49,7 +49,5 @@ export function setupWs({ router, verifier }: WsArgs) {
     }
   };
 
-  const countListeners = () => clients.size;
-
-  return { notifyListener, countListeners };
+  return { notifyListener };
 }
