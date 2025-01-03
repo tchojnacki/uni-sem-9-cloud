@@ -20,12 +20,18 @@ export class Bus {
     await this.client.publish("message-bus", data);
   }
 
-  public async subMessage(callback: (message: Message) => void): Promise<void> {
+  public async subMessage(
+    callback: (message: Message) => Promise<void> | void
+  ): Promise<void> {
     const subscriber = await wrap(this.client.duplicate());
-    await subscriber.subscribe("message-bus", (data) => {
+    await subscriber.subscribe("message-bus", async (data) => {
       const message = JSON.parse(data);
       console.log(`BS: sub ${data}`);
-      callback(message);
+      try {
+        await callback(message);
+      } catch (error) {
+        console.log(`BS: error ${error}`);
+      }
     });
   }
 }

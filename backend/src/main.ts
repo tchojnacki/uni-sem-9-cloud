@@ -14,6 +14,7 @@ import {
 } from "./env.ts";
 import { cors, instanceId, logging } from "./middlewares.ts";
 import { Queue } from "./queue.ts";
+import { Message } from "./types.ts";
 import { setupWs } from "./ws.ts";
 
 if (import.meta.main) {
@@ -50,8 +51,16 @@ if (import.meta.main) {
     }
   });
 
-  adminmsgQueue.receive((message) => {
-    console.log("TODO", message);
+  adminmsgQueue.receive(async (data) => {
+    const admin = await database.findAdmin();
+    if (!admin) return;
+
+    const { sender, receiver, content } = data as Message;
+    const senderName = await database.findUsername(sender);
+    const receiverName = await database.findUsername(receiver);
+    const alert = `${senderName} 🡒 ${receiverName}:\n${content}`;
+    const message = await database.insertMessage(admin.id, admin.id, alert);
+    await bus.pubMessage(message);
   });
 
   router.get("/health", (ctx) => {

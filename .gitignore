@@ -1,3 +1,4 @@
 .postgres
 .env
 *.pdf
+terraform/lambda-payload.zip

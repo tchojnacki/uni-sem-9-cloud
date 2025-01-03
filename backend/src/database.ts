@@ -58,4 +58,16 @@ export class Database {
       ORDER BY time`;
     return rows;
   }
+
+  public async findAdmin(): Promise<Account | null> {
+    const { rows } = await this.client.queryObject<Account>`
+      SELECT * FROM account WHERE username = 'admin'`;
+    return rows[0] ?? null;
+  }
+
+  public async findUsername(id: string): Promise<string> {
+    const { rows } = await this.client.queryArray<[string]>`
+      SELECT username FROM account WHERE id = ${id}`;
+    return rows[0]?.[0] ?? id;
+  }
 }

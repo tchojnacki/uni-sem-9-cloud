@@ -25,7 +25,7 @@ export class Queue {
     }
   }
 
-  public receive(callback: (data: unknown) => void): void {
+  public receive(callback: (data: unknown) => Promise<void> | void): void {
     const QueueUrl = this.queueUrl;
     if (!QueueUrl) {
       return;
@@ -42,7 +42,11 @@ export class Queue {
         if (Body && ReceiptHandle) {
           const data = JSON.parse(Body);
           console.log(`QE: receive ${Body}`);
-          callback(data);
+          try {
+            await callback(data);
+          } catch (error) {
+            console.log(`QE: error ${error}`);
+          }
           await this.client.send(
             new DeleteMessageCommand({ QueueUrl, ReceiptHandle })
           );
