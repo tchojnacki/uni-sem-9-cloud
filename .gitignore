@@ -1,4 +1,11 @@
 .postgres
 .env
 *.pdf
-terraform/lambda-payload.zip
+
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+.terraform.tfstate.lock.info
+lambda-payload.zip
